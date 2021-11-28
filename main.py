@@ -51,26 +51,42 @@ with col2:
 #----------------------------------------
 #Enter user-defined hyper parameters
 
-'''
-## Model Parameters
-'''
-col31, col32, col33 = st.columns(3)
-with col31:
-    img_size = st.number_input(label='NN Input Size', min_value=100, max_value= 1000, value=300)
-    noise_intensity = st.number_input(label='Noise level on initialization', min_value=0.0, max_value= 1.0, value=0.1)
-    style_ratio = st.number_input(label='Style to Content Ratio', min_value=0., max_value= 1., value=0.3)
+
+st.sidebar.header('Options')
+img_size = st.sidebar.number_input(label='NN Input Size', min_value=100, max_value= 1000, value=300)
+noise_intensity = st.sidebar.number_input(label='Noise level on initialization', min_value=0.0, max_value= 1.0, value=0.1)
+style_ratio = st.sidebar.number_input(label='Style to Content Ratio', min_value=0., max_value= 1., value=0.3)
+
+optimizer_name = st.sidebar.radio('Optimizer', ('Adam','SGD'))
+learning_rate = st.sidebar.number_input(label='Learning Rate', min_value=0.00001, max_value= 1., value=0.01)
+momentum = st.sidebar.number_input(label='Momentum (SGD only)', min_value=0.0001, max_value= 1., value=0.85)
+
+st.sidebar.subheader('Weighting of layers')
+style_wts = []
+for i in range(5):
+    wt = st.sidebar.number_input(label=f'Block{i+1}', min_value=0., max_value= 1., value=0.2)
+    style_wts.append(wt)
+
+# '''
+# ## Model Parameters
+# '''
+# col31, col32, col33 = st.columns(3)
+# with col31:
+#     img_size = st.number_input(label='NN Input Size', min_value=100, max_value= 1000, value=300)
+#     noise_intensity = st.number_input(label='Noise level on initialization', min_value=0.0, max_value= 1.0, value=0.1)
+#     style_ratio = st.number_input(label='Style to Content Ratio', min_value=0., max_value= 1., value=0.3)
 
 
-with col32:
-    optimizer_name = st.selectbox('Optimizer', ('Adam','SGD'))
-    learning_rate = st.number_input(label='Learning Rate', min_value=0.00001, max_value= 1., value=0.01)
-    momentum = st.number_input(label='Momentum (SGD only)', min_value=0.0001, max_value= 1., value=0.85)
+# with col32:
+#     optimizer_name = st.selectbox('Optimizer', ('Adam','SGD'))
+#     learning_rate = st.number_input(label='Learning Rate', min_value=0.00001, max_value= 1., value=0.01)
+#     momentum = st.number_input(label='Momentum (SGD only)', min_value=0.0001, max_value= 1., value=0.85)
 
-with col33:
-    style_wts = []
-    for i in range(5):
-        wt = st.number_input(label=f'Style Weight - Block{i+1}', min_value=0., max_value= 1., value=0.2)
-        style_wts.append(wt)
+# with col33:
+#     style_wts = []
+#     for i in range(5):
+#         wt = st.number_input(label=f'Style Weight - Block{i+1}', min_value=0., max_value= 1., value=0.2)
+#         style_wts.append(wt)
 
 #End of user-defined parameters
 #------------------------------------------------------------------------
