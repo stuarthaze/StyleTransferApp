@@ -78,7 +78,7 @@ with col33:
 
 vgg = tf.keras.applications.VGG19(include_top=False,
                                   input_shape=(img_size, img_size, 3),
-                                  weights='vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5')
+                                  weights='vgg19_weights.h5')
 
 vgg.trainable = False
 
