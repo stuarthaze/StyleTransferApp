@@ -12,5 +12,5 @@ numpy
 ```
 
 ### Running
-The app can be run at the command line:
+The app can be run at the command line:  
 `streamlit run app.py`
