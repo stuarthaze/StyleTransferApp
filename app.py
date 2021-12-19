@@ -10,32 +10,38 @@ This app uses the method of neural style transfer proposed by Gatys *et al.*  [(
 '''
 
 #----- Load Images --------
-
-
 col1, col2 = st.columns(2)
 with col1:
     '''
     ## Content Image
     '''
     content_img_loc = st.empty()
-    content_type = st.radio('Select Content', ('Default', 'Uploaded'))
-    new_content = st.file_uploader('Upload new image', type=['png','jpg'])
-
-    if content_type == 'Default':
-        content_image_orig = Image.open('images/BigBen.jpg')
-    elif content_type == 'Uploaded':
-        content_image_orig = Image.open(new_content)
     
-    content_img_loc.image(content_image_orig)
-
 with col2:
     '''
     ## Style image
     '''
     style_img_loc = st.empty()
+
+#--- Selections below to ensure alignment
+col11, col12 = st.columns(2)
+with col11:
+    content_type = st.radio('Select Content', ('Default', 'Uploaded'))
+
+with col12:
     style_type = st.radio('Select Style', ('Wave', 'Ink', 'Picasso', 'Uploaded'))
-    new_style = st.file_uploader('Upload new style image', type=['png','jpg'])
-    
+
+#--- File uploaders
+col21, col22 = st.columns(2)
+with col21:
+    new_content = st.file_uploader('Upload new image', type=['png','jpg'])
+    if content_type == 'Default':
+        content_image_orig = Image.open('images/BigBen.jpg')
+    elif content_type == 'Uploaded':
+        content_image_orig = Image.open(new_content)
+
+with col22:
+    new_style = st.file_uploader('Upload new style image', type=['png','jpg']) 
     if style_type == 'Ink':
         style_image_orig = Image.open('images/japanese_town.jpg')
     elif style_type == 'Wave':
@@ -45,7 +51,9 @@ with col2:
     elif style_type == 'Uploaded':
         style_image_orig = Image.open(new_style)
 
-    style_img_loc.image(style_image_orig)
+#Insert images
+content_img_loc.image(content_image_orig)
+style_img_loc.image(style_image_orig)
 
 #End Image Loading
 #----------------------------------------
@@ -320,10 +328,13 @@ def train_step(generated_image):
 ## Fit Model
 '''
 costs = []
-epochs = st.number_input(label='Number of epochs', min_value=1, max_value=10000, value=10)
 
-show_training = st.checkbox(label='Show training data')
-train_checked = st.button('Start')
+col_1, col_2 = st.columns(2)
+with col_1:
+    epochs = st.number_input(label='Number of epochs', min_value=1, max_value=10000, value=10)
+with col_2:
+    show_training = st.checkbox(label='Show training data')
+    train_checked = st.button('Start')
 
 prog_bar = st.progress(0)
 gen_img_loc = st.empty()
