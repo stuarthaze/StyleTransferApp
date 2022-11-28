@@ -1,7 +1,0 @@
-List of commands for heroku
-
-heroku login
-heroku create appname
-git push heroku main (or master?)
-heroku ps:scale web=1
-heroku open 
